@@ -49,13 +49,17 @@ print(predicted_list)
 predicted_labels = [reversed_mapping[v] for v in predicted_list]
 print(predicted_labels)
 
-predicted_dictionary = dict(Counter(predicted_labels))
-print(predicted_dictionary)
+counter_dict = {k: 0 for k in mapping}
+
+for a in predicted_labels:
+    counter_dict[a]+= 1
+    
+print(counter_dict)
 
 AQL_limiet = 7
 batch_size = len(pil_images)
 
-if predicted_dictionary["Normal_Apple"] < (batch_size - AQL_limiet):
+if counter_dict["Normal_Apple"] < (batch_size - AQL_limiet):
     print('Batch rejected')
 
 else:
