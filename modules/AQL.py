@@ -5,7 +5,13 @@ import os
 from PIL import Image
 from collections import Counter
 
-model = torch.load('./models/resnet_model.pth')
+from network import CNNModel
+
+
+model = CNNModel(4)
+path = 'C:/Users/31641/Workspace/Project_3_Computer_Vision/my_models/custom_model_1.pth'
+model_state_dict = torch.load(path)
+model.load_state_dict(model_state_dict)
 model.eval()
 
 mapping = {'Blotch_Apple': 0, 'Normal_Apple': 1, 'Rot_Apple': 2, 'Scab_Apple': 3}
@@ -15,7 +21,8 @@ reversed_mapping = {v: k for k,v in mapping.items()}
 #Alle paden naar de foto's in een lijst zetten
 
 pil_images = []
-batch_folder_path = './data/batch/'
+batch_folder_path = 'C:/Users/31641/Workspace/Project_3_Computer_Vision/data/batch'
+
 for filename in os.listdir(batch_folder_path):
     file_path = os.path.join(batch_folder_path, filename)
     pil_images.append(Image.open(file_path))
